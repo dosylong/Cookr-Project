@@ -1,0 +1,3 @@
+#ignore from server
+server/node_modules
+server/.env
