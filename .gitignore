@@ -1,3 +1,7 @@
 #ignore from server
 server/node_modules
 server/.env
+
+#ignore from client
+client/node_modules
+client/.env
