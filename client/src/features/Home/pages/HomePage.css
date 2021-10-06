@@ -1,0 +1,90 @@
+.home_page {
+  height: 87vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.title > h2 {
+  font-size: 80px;
+  margin: 0;
+}
+
+.title > h1 {
+  font-size: 100px;
+  width: 80%;
+  line-height: 1em;
+  margin: 10px auto;
+  margin-top: 0;
+  font-weight: 900;
+  letter-spacing: -4px;
+  /* color: rgb(17, 17, 17); */
+  color: black;
+  text-decoration: underline;
+}
+
+.title > p {
+  padding: 15px 0;
+  line-height: 1.5em;
+  width: 50%;
+  margin: auto;
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.typewriter {
+  font-size: 50px;
+  width: 80%;
+  line-height: 1em;
+  margin: 10px auto;
+  margin-top: 0;
+  font-weight: 300;
+  letter-spacing: -4px;
+  color: rgb(17, 17, 17);
+}
+
+.join_us {
+  width: 270px;
+  margin: 15px auto 0px auto;
+  padding: 15px 0;
+  border: none;
+  background: rgb(17, 17, 17);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.join_us span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.join_us span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.join_us:hover span {
+  padding-right: 25px;
+}
+
+.join_us:hover span:after {
+  opacity: 1;
+  right: 0;
+}
