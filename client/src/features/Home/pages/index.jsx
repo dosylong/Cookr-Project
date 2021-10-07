@@ -8,10 +8,10 @@ export default function HomePage() {
     <>
       <div className="home_page">
         <div className="title">
-        <h2>🥘</h2>
-        <h1>A favorite place who in love with cooking!</h1>
+        <h2>🍱</h2>
+        <h1>A wonderful place for cooking lovers!</h1>
         <p>
-          We have recipe for
+          The collection of recipes for
           <div className="typewriter">
             <Typewriter
               options={{

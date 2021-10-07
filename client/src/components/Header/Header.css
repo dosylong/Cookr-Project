@@ -1,11 +1,7 @@
-.header {
-  width: 100%;
-  height: 50px;
-  background-color: white;
-  align-items: center;
-  top: 0;
+.header_style {
+  background-color: green !important;
 }
 
-.header_left {
-  
+.logout_icon {
+  padding-left: 3.5px;
 }
