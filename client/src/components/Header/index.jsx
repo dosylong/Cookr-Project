@@ -82,6 +82,7 @@ export default function Header() {
     await auth.signOut().then(() => {
       localStorage.clear();
       window.location = '/';
+      setAnchorEl(null);
     })
   };
 
@@ -171,7 +172,18 @@ export default function Header() {
             sx={{ display: { xs: 'none', sm: 'block' } }}>
               COOKR 🍱
             </Link>
-            <Box sx={{ flexGrow: 1 }} />
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
+          {/* <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search> */}
+          
+          <Box sx={{ flexGrow: 1 }} />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -181,8 +193,6 @@ export default function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          
-          <Box sx={{ flexGrow: 1 }} />
           {user ? (
             <>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -212,8 +222,7 @@ export default function Header() {
           </Box>
           </>
           ) : (
-            <Button variant="contain" href="/login">Log in</Button>
-            
+            <Button variant="contain" href="/login">Log in</Button>          
           )}
         </Toolbar>
       </AppBar>

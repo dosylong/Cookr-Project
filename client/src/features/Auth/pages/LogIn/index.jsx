@@ -1,5 +1,5 @@
 import firebase from '../../../../firebase';
-import {auth} from '../../../../firebase';
+import { auth } from '../../../../firebase';
 import React from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
