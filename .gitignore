@@ -5,3 +5,6 @@ server/.env
 #ignore from client
 client/node_modules
 client/.env
+client/src/firebase
+
+.vscode

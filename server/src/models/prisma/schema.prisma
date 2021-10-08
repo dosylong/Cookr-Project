@@ -8,20 +8,30 @@ generator client {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  username  String?
-  firstName String?
-  lastName  String?
-  role      Role    @default(USER)
+  userFirebaseId String  @id
+  firstName      String?
+  lastName       String?
+  photoURL       String?
+  post           Post[]
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  title       String
-  description String
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updateAt   DateTime    @updatedAt
+  title      String
+  content    String
+  postImage  String[]
+  authorId   String
+  user       User?       @relation(fields: [authorId], references: [userFirebaseId])
+  ingredient Ingredient? @relation(fields: [id], references: [id])
 
+}
+
+model Ingredient {
+  id                Int    @id @default(autoincrement())
+  ingredientContent String
+  post              Post[]
 }
 
 enum Role {

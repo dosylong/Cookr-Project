@@ -1,6 +1,8 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const dotenv = require("dotenv");
+const cors = require('cors');
+const route = require('./routes');
+const dotenv = require('dotenv');
 dotenv.config();
 
 app.use(
@@ -8,12 +10,20 @@ app.use(
     extended: true,
   })
 );
+app.use(express.json());
 
-app.use("/", (req, res) => {
-  res.send("hello");
+app.use(
+  cors({
+    origin: 'https://localhost:3000',
+    credentials: true,
+  })
+);
+
+app.use('/', (req, res) => {
+  res.send('server is running');
 });
 
-app.use(express.json());
+route(app);
 
 const port = process.env.PORT;
 app.listen(port, () => {
