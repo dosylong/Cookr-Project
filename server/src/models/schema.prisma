@@ -9,9 +9,10 @@ generator client {
 
 model User {
   userFirebaseId String  @id
-  firstName      String?
-  lastName       String?
-  photoURL       String?
+  username       String  @unique
+  bio            String
+  fullName       String
+  photoURL       String? 
   post           Post[]
 }
 

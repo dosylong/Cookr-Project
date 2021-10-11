@@ -16,7 +16,7 @@
     "passport-local": "^1.0.0"
   },
   "prisma": {
-    "schema": "src/models/prisma/schema.prisma"
+    "schema": "src/models/schema.prisma"
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
