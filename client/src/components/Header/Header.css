@@ -5,3 +5,13 @@
 .logout_icon {
   padding-left: 3.5px;
 }
+
+.linkHeader {
+  text-decoration: none;
+  color: white;
+}
+
+.linkProfile {
+  text-decoration: none;
+  color: black;
+}

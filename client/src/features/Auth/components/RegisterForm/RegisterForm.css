@@ -1,0 +1,11 @@
+.form {
+  margin-top: 10px;
+}
+
+.MuiFormHelperText-root {
+  color: red !important;
+}
+
+.isGoogleLoginInput {
+  display: none;
+}
