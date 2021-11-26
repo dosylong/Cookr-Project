@@ -34,50 +34,48 @@ function ProfileInfo(props) {
     console.log('create recipe');
   };
   return (
-    <div>
+    <Container maxWidth='md'>
       <CssBaseline />
-      <Container maxWidth='lg'>
-        <div className='profileContainer'>
-          <div className='profileAvatar'>
-            {profile.photoURL ? (
-              <img
-                alt={profile.fullName}
-                src={profile.photoURL}
-                className='profileAvatarImg'
-              />
-            ) : (
-              <Skeleton variant='circular' width={180} height={180} />
-            )}
-          </div>
-
-          <div className='profileFullName'>{profile.fullName}</div>
-
-          <div className='profileBio'>{profile.bio}</div>
-
-          {isOwner && (
-            <>
-              <Divider style={{ width: '95%' }} />
-              <div className='buttonContainer'>
-                <Stack direction='row' spacing={2} sx={{ mr: 3.6 }}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={onClickCreateRecipe}>
-                    Create new Recipe
-                  </Button>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={onClickEditProfile}>
-                    Edit Profile
-                  </Button>
-                </Stack>
-              </div>
-            </>
+      <div className='profileContainer'>
+        <div className='profileAvatar'>
+          {profile.photoURL ? (
+            <img
+              alt={profile.fullName}
+              src={profile.photoURL}
+              className='profileAvatarImg'
+            />
+          ) : (
+            <Skeleton variant='circular' width={180} height={180} />
           )}
         </div>
-      </Container>
-    </div>
+
+        <div className='profileFullName'>{profile.fullName}</div>
+
+        <div className='profileBio'>{profile.bio}</div>
+
+        {isOwner && (
+          <>
+            <Divider style={{ width: '95%' }} />
+            <div className='buttonContainer'>
+              <Stack direction='row' spacing={2} sx={{ mr: 3.6 }}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={onClickCreateRecipe}>
+                  Create new Recipe
+                </Button>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={onClickEditProfile}>
+                  Edit Profile
+                </Button>
+              </Stack>
+            </div>
+          </>
+        )}
+      </div>
+    </Container>
   );
 }
 

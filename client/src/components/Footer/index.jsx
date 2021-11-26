@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Link } from '@mui/material';
 import Box from '@mui/material/Box';
+import './Footer.css';
 
 function Copyright() {
   return (
@@ -18,7 +19,7 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <Box sx={{ bgcolor: 'background.paper', py: 6 }}>
+    <Box sx={{ py: 6 }} className='footerBackground'>
       <Typography variant='h6' align='center' gutterBottom>
         CooKit
       </Typography>

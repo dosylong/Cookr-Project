@@ -7,6 +7,7 @@ import { Typography, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
@@ -56,6 +57,15 @@ export default function RecipeForm(props) {
     servings: '',
     coverImage: '',
   };
+
+  const createRecipeSchema = yup.object().shape({
+    title: yup.string().required('Title is required!'),
+    name: yup.string().required('Name is required!'),
+    content: yup.string().required('Content is required!'),
+    prepTime: yup.string().required('Prepare Time is required!'),
+    cookTime: yup.string().required('Cook Time is required!'),
+    servings: yup.string().required('Servings is required!'),
+  });
 
   const handleCreateRecipe = (values) => {
     onSubmitRecipe(values);

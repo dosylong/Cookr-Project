@@ -15,7 +15,7 @@ import { auth } from '../../firebase';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import './Header.css';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import userApi from 'api/userApi';
@@ -143,54 +143,58 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static' className='header_style'>
-        <Toolbar>
-          <Link to='/' className='linkHeader'>
-            <Typography variant='h6'>CooKit 🍱</Typography>
-          </Link>
+      <AppBar position='fixed' className='header_style'>
+        <Container maxWidth='lg'>
+          <Toolbar>
+            <Link to='/' className='linkHeader'>
+              <Typography variant='h6' sx={{ fontSize: 25 }}>
+                CooKit 🍱
+              </Typography>
+            </Link>
 
-          <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ flexGrow: 1 }} />
 
-          {isLoggedIn ? (
-            <>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder='Search…'
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <IconButton
-                  size='large'
-                  edge='end'
-                  aria-label='account of current user'
-                  aria-controls={menuId}
-                  aria-haspopup='true'
-                  onClick={handleProfileMenuOpen}
-                  color='inherit'>
-                  <Avatar src={photoURL} alt={fullName} />
-                </IconButton>
-              </Box>
-            </>
-          ) : (
-            <>
-              <Button variant='contain'>
-                <Link to='/user/login' className='linkHeader'>
-                  Log in
-                </Link>
-              </Button>
+            {isLoggedIn ? (
+              <>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder='Search…'
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </Search>
+                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                  <IconButton
+                    size='large'
+                    edge='end'
+                    aria-label='account of current user'
+                    aria-controls={menuId}
+                    aria-haspopup='true'
+                    onClick={handleProfileMenuOpen}
+                    color='inherit'>
+                    <Avatar src={photoURL} alt={fullName} />
+                  </IconButton>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Button variant='contain'>
+                  <Link to='/user/login' className='linkHeader'>
+                    Log in
+                  </Link>
+                </Button>
 
-              <Button variant='contain'>
-                <Link to='/user/register' className='linkHeader'>
-                  Register
-                </Link>
-              </Button>
-            </>
-          )}
-        </Toolbar>
+                <Button variant='contain'>
+                  <Link to='/user/register' className='linkHeader'>
+                    Register
+                  </Link>
+                </Button>
+              </>
+            )}
+          </Toolbar>
+        </Container>
       </AppBar>
       {renderMenu}
     </Box>

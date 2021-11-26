@@ -1,5 +1,5 @@
-.home_page {
-  height: 60vh;
+.banner {
+  height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,17 +8,17 @@
   text-align: center;
 }
 
-.title {
+.bannerTitle {
   display: flex;
   flex-direction: column;
 }
 
-.title > h2 {
+.bannerTitle > h2 {
   font-size: 80px;
   margin: 0;
 }
 
-.title > h1 {
+.bannerTitle > h1 {
   font-size: 75px;
   width: 80%;
   line-height: 1em;
@@ -31,7 +31,7 @@
   text-decoration: underline;
 }
 
-.title > p {
+.bannerTitle > p {
   padding: 15px 0;
   line-height: 1.5em;
   width: 50%;
@@ -47,12 +47,12 @@
   line-height: 1em;
   margin: 10px auto;
   margin-top: 0;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: -4px;
   color: rgb(17, 17, 17);
 }
 
-.join_us {
+/* .join_us {
   width: 270px;
   margin: 15px auto 0px auto;
   padding: 15px 0;
@@ -87,4 +87,4 @@
 .join_us:hover span:after {
   opacity: 1;
   right: 0;
-}
+} */

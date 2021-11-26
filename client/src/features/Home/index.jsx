@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import HomePage from './pages/index'
+import HomePage from './pages/HomePage/index';
 
 export default function Home() {
-  const match = useRouteMatch()
+  const match = useRouteMatch();
 
   return (
     <Switch>
       <Route exact path={match.url} component={HomePage} />
     </Switch>
-  )
+  );
 }
