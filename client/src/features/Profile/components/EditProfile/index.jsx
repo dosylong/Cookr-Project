@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Typography, Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import './EditProfile.css';
@@ -11,17 +11,24 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import userApi from 'api/userApi';
 import { styled } from '@mui/material/styles';
-import { storage, auth } from '../../../../firebase';
-import { useSelector } from 'react-redux';
 import ProgressBar from 'components/ProgressBar';
 
 EditProfileForm.propTypes = {
   onClickEditProfile: PropTypes.func,
+  updateDisplayName: PropTypes.func,
+  uploadAvatar: PropTypes.func,
+  profile: PropTypes.object,
+  imgURL: PropTypes.string,
+  progress: PropTypes.number,
 };
 EditProfileForm.defaultProps = {
   onClickEditProfile: null,
+  updateDisplayName: null,
+  uploadAvatar: null,
+  profile: {},
+  imgURL: '',
+  progress: 0,
 };
 
 const Input = styled('input')({
@@ -31,111 +38,24 @@ const Input = styled('input')({
 const theme = createTheme();
 
 export default function EditProfileForm(props) {
-  const { onClickEditProfile } = props;
+  const {
+    onClickEditProfile,
+    updateDisplayName,
+    uploadAvatar,
+    profile,
+    imgURL,
+    progress,
+  } = props;
   const history = useHistory();
-  const [profile, setProfile] = useState({});
-  const [imgURL, setImgURL] = useState('');
-  const [progress, setProgress] = useState(0);
-
-  const email = useSelector((state) => state.userAuth.email);
-  const id = useSelector((state) => state.userAuth.id);
-
-  useEffect(() => {
-    setProgress((prevProgress) =>
-      prevProgress >= 100 ? 10 : prevProgress + 10
-    );
-  }, []);
-
-  const updateDisplayName = (values) => {
-    const currentUser = auth.currentUser;
-    currentUser
-      .updateProfile({
-        displayName: values.fullName,
-      })
-      .then(() => {
-        console.log('Updated fullName successfully!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const onClickBack = () => {
     history.goBack();
-  };
-
-  const updateAvatarUrl = async (url) => {
-    const response = await userApi.updateUserProfileAvatar({
-      photoURL: url,
-      userFirebaseId: id,
-    });
-    console.log('upload URL DB', response);
-  };
-
-  const uploadAvatar = async (file) => {
-    const uploadTask = storage
-      .ref(`avatars/${email}/avatar/${file.name}`)
-      .put(file);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref(`avatars/${email}/avatar/`)
-          .child(file.name)
-          .getDownloadURL()
-          .then(async (url) => {
-            setImgURL(url);
-            updateAvatarUrl(url);
-            updateAvatar(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    );
-  };
-
-  const updateAvatar = async (url) => {
-    const currentUser = auth.currentUser;
-    currentUser
-      .updateProfile({
-        photoURL: url,
-      })
-      .then(() => {
-        console.log('Updated avatar successfully!');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const handleEdit = (values) => {
     onClickEditProfile(values);
     updateDisplayName(values);
   };
-
-  useEffect(() => {
-    try {
-      const getProfile = async () => {
-        const response = await userApi.getUserProfile({
-          userFirebaseId: id,
-        });
-        setProfile(response);
-      };
-      getProfile();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [id]);
 
   const initialValues = {
     email: profile.email,
@@ -184,6 +104,37 @@ export default function EditProfileForm(props) {
               {({ handleChange, handleSubmit, values, errors, touched }) => (
                 <Form className='form'>
                   <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <img
+                        src={imgURL}
+                        alt={values.fullName}
+                        className='image'
+                      />
+                      <label htmlFor='contained-button-file'>
+                        <Input
+                          accept='image/*'
+                          id='contained-button-file'
+                          type='file'
+                          onChange={(e) => uploadAvatar(e.target.files[0])}
+                        />
+                        <Button
+                          variant='contained'
+                          component='span'
+                          className='uploadAvatarButton'
+                          sx={{
+                            mt: 2,
+                            backgroundColor: '#2a9d8f',
+                          }}>
+                          Upload Avatar
+                        </Button>
+                        {imgURL ? (
+                          <Box sx={{ width: '100%' }}>
+                            <ProgressBar value={progress} progress={progress} />
+                          </Box>
+                        ) : null}
+                      </label>
+                    </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         error={errors.email && touched.email ? true : null}
@@ -253,24 +204,6 @@ export default function EditProfileForm(props) {
                     sx={{ mt: 3, mb: 2 }}>
                     Edit Profile
                   </Button>
-
-                  <label htmlFor='contained-button-file'>
-                    <Input
-                      accept='image/*'
-                      id='contained-button-file'
-                      type='file'
-                      onChange={(e) => uploadAvatar(e.target.files[0])}
-                    />
-                    <Button variant='contained' component='span' sx={{ mt: 3 }}>
-                      Upload Avatar
-                    </Button>
-                    {imgURL ? (
-                      <Box sx={{ width: '100%' }}>
-                        <ProgressBar value={progress} progress={progress} />
-                      </Box>
-                    ) : null}
-                  </label>
-                  <img src={imgURL} alt={values.fullName} />
 
                   <Grid container justifyContent='flex-start'>
                     <Grid item>

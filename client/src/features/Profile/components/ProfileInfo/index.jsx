@@ -7,6 +7,8 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import './ProfileInfo.css';
 import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
 
 ProfileInfo.propTypes = {
   profile: PropTypes.object,
@@ -35,40 +37,45 @@ function ProfileInfo(props) {
     <div>
       <CssBaseline />
       <Container maxWidth='lg'>
-        <div className='profile-info-container'>
-          <div className='profile-info-avatar'>
+        <div className='profileContainer'>
+          <div className='profileAvatar'>
             {profile.photoURL ? (
               <img
                 alt={profile.fullName}
                 src={profile.photoURL}
-                className='profile-info-avatar-img'
+                className='profileAvatarImg'
               />
             ) : (
               <Skeleton variant='circular' width={180} height={180} />
             )}
           </div>
 
-          <div className='profile-info-name'>{profile.fullName}</div>
+          <div className='profileFullName'>{profile.fullName}</div>
 
-          <div className='profile-info-bio'>{profile.bio}</div>
+          <div className='profileBio'>{profile.bio}</div>
+
+          {isOwner && (
+            <>
+              <Divider style={{ width: '95%' }} />
+              <div className='buttonContainer'>
+                <Stack direction='row' spacing={2} sx={{ mr: 3.6 }}>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={onClickCreateRecipe}>
+                    Create new Recipe
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={onClickEditProfile}>
+                    Edit Profile
+                  </Button>
+                </Stack>
+              </div>
+            </>
+          )}
         </div>
-
-        {isOwner && (
-          <div className='buttonContainer'>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={onClickCreateRecipe}>
-              Create new Recipe
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={onClickEditProfile}>
-              Edit Profile
-            </Button>
-          </div>
-        )}
       </Container>
     </div>
   );

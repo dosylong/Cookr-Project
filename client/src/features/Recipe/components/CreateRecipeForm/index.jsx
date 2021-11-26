@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Container from '@mui/material/Container';
@@ -15,7 +15,13 @@ import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './CreateRecipeForm.css';
 
-RecipeForm.propTypes = {};
+RecipeForm.propTypes = {
+  onSubmitRecipe: PropTypes.func,
+};
+
+RecipeForm.defaultProps = {
+  onSubmitRecipe: null,
+};
 
 const Input = styled('input')({
   display: 'none',
@@ -38,6 +44,7 @@ const editorConfiguration = {
 };
 
 export default function RecipeForm(props) {
+  const { onSubmitRecipe } = props;
   const initialValues = {
     ingredients: [''],
     title: '',
@@ -48,6 +55,10 @@ export default function RecipeForm(props) {
     cookTime: '',
     servings: '',
     coverImage: '',
+  };
+
+  const handleCreateRecipe = (values) => {
+    onSubmitRecipe(values);
   };
 
   return (
@@ -65,7 +76,7 @@ export default function RecipeForm(props) {
         </Typography>
         <Formik
           initialValues={initialValues}
-          onSubmit={(values) => console.log(values)}>
+          onSubmit={(values) => handleCreateRecipe(values)}>
           {({ handleChange, handleSubmit, values, errors, touched }) => (
             <Form className='formEditor'>
               <Container maxWidth='md'>
@@ -207,10 +218,15 @@ export default function RecipeForm(props) {
                     <CKEditor
                       editor={ClassicEditor}
                       config={editorConfiguration}
-                      data
+                      data={values.content}
                       onChange={(event, editor) => {
                         const data = editor.getData();
-                        console.log({ event, editor, data });
+                        handleChange({
+                          target: {
+                            name: 'content',
+                            value: data,
+                          },
+                        });
                       }}
                     />
                     <Container maxWidth='xs'>

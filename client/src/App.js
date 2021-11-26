@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import Login from './features/Auth';
 import Register from './features/Auth';
@@ -19,30 +19,30 @@ import { userProfile, getUserProfile } from 'app/authSlice';
 import { auth } from './firebase';
 import Profile from './features/Profile';
 import Recipe from './features/Recipe';
-import userApi from './api/userApi';
+// import userApi from './api/userApi';
 
 function App() {
   const dispatch = useDispatch();
 
   const uid = useSelector((state) => state.userAuth.id);
-  const [isExistProfile, setIsExistProfile] = useState(true);
+  // const [isExistProfile, setIsExistProfile] = useState(true);
 
-  useEffect(() => {
-    try {
-      const checkProfile = async () => {
-        if (!uid) return;
-        const response = await userApi.getUserProfile({
-          userFirebaseId: uid,
-        });
-        if (response.message === 'User not found') {
-          setIsExistProfile(false);
-        }
-      };
-      checkProfile();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [uid]);
+  // useEffect(() => {
+  //   try {
+  //     const checkProfile = async () => {
+  //       if (!uid) return;
+  //       const response = await userApi.getUserProfile({
+  //         userFirebaseId: uid,
+  //       });
+  //       if (response.message === 'User not found') {
+  //         setIsExistProfile(false);
+  //       }
+  //     };
+  //     checkProfile();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [uid]);
 
   // Handle firebase auth changed
   useEffect(() => {
@@ -88,7 +88,7 @@ function App() {
       <Router>
         <Switch>
           <Route path='/user' component={Login} />
-          {!isExistProfile && <Redirect to='/user/register' />}
+          {/* {!isExistProfile && <Redirect to='/user/register' />} */}
           <Route path='/user/register' component={Register} />
           <Route>
             <CssBaseline />

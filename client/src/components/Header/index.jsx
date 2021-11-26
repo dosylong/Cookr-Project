@@ -18,7 +18,7 @@ import './Header.css';
 import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
-// import userApi from 'api/userApi';
+import userApi from 'api/userApi';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,10 +66,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profile, setProfile] = useState({});
 
   const photoURL = useSelector((state) => state.userAuth.photoURL);
   const userId = useSelector((state) => state.userAuth.id);
   const fullName = useSelector((state) => state.userAuth.fullName);
+
+  useEffect(() => {
+    try {
+      const getUser = async () => {
+        const response = await userApi.getUserProfile({
+          userFirebaseId: userId,
+        });
+        setProfile(response);
+      };
+      getUser();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userId]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -108,7 +123,7 @@ export default function Header() {
           <Stack direction='row' spacing={2}>
             <Avatar sx={{ mt: 0.7 }} src={photoURL} alt={fullName} />
             <Stack direction='column'>
-              <Typography variant='h6'>{fullName}</Typography>
+              <Typography variant='h6'>{profile.fullName}</Typography>
               <Typography variant='body1'>View Profile</Typography>
             </Stack>
           </Stack>
