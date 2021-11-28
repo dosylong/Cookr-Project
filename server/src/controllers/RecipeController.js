@@ -8,28 +8,41 @@ const nanoid = customRandom(urlAlphabet, 10, random);
 class RecipeController {
   createRecipe = async (req, res, next) => {
     try {
-      console.log(req.body);
-      const createRecipe = await prisma.recipe.create({
+      // const createRecipe = await prisma.recipe.create({
+      //   data: {
+      //     // authorId: req.body.authorId,
+      //     authorId: 'QZzXsTWfuAVDIahVMISbTY6fcwv1',
+      //     name: req.body.name,
+      //     content: req.body.content,
+      //     description: req.body.description,
+      //     coverImage: String(req.body.coverImage),
+      //     prepTime: req.body.prepTime,
+      //     cookTime: req.body.cookTime,
+      //     servings: req.body.servings,
+      //     recipeSlug: `${slugify(req.body.name)}-${nanoid()}`,
+      //     categoryId: 1,
+
+      //     ingredients: 1,
+      //   },
+      //   include: {
+      //     user: true,
+      //   },
+      // });
+      const response = await prisma.recipe.create({
         data: {
           authorId: req.body.authorId,
-          name: req.body.name,
           content: req.body.content,
           description: req.body.description,
-          coverImage: String(req.body.coverImage),
-          prepTime: req.body.prepTime,
           cookTime: req.body.cookTime,
+          categoryId: req.body.categoryId,
+          name: req.body.name,
+          prepTime: req.body.prepTime,
           servings: req.body.servings,
           recipeSlug: `${slugify(req.body.name)}-${nanoid()}`,
-          categoryId: req.body.categoryId,
-
-          ingredients: {
-            create: {
-              description: Array(req.body.description),
-            },
-          },
+          coverImage: String(req.body.coverImage),
         },
       });
-      res.status(201).json(createRecipe);
+      res.status(200).json(response);
     } catch (error) {
       return next(error);
     }

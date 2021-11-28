@@ -15,32 +15,33 @@ model User {
   fullName       String
   photoURL       String
   recipes        Recipe[]
+
 }
 
 model Recipe {
-  id           Int         @id @default(autoincrement())
-  user         User?       @relation(fields: [authorId], references: [userFirebaseId])
-  ingredients  Ingredient? @relation(fields: [ingredientId], references: [id])
-  categories   Category?   @relation(fields: [categoryId], references: [id])
-  categoryId   Int
-  authorId     String
-  ingredientId Int
-  name         String
-  content      String
-  description  String
-  coverImage   String[]
-  prepTime     String
-  cookTime     String
-  servings     String
-  recipeSlug   String      @unique
-  createdAt    DateTime    @default(now())
-  updateAt     DateTime    @updatedAt
+  id          Int          @id @default(autoincrement())
+  categoryId  Int
+  authorId    String?
+  name        String?
+  content     String?
+  description String?
+  coverImage  String[]
+  prepTime    String?
+  cookTime    String?
+  servings    String?
+  recipeSlug  String?      @unique
+  createdAt   DateTime     @default(now())
+  updateAt    DateTime     @updatedAt
+  categories  Category?    @relation(fields: [categoryId], references: [id])
+  user        User?        @relation(fields: [authorId], references: [userFirebaseId])
+  ingredients Ingredient[]
 }
 
 model Ingredient {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
+  recipeId    Int
   description String
-  recipes     Recipe[]
+  recipes     Recipe? @relation(fields: [recipeId], references: [id])
 }
 
 model Category {
