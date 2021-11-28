@@ -28,7 +28,16 @@ RegisterForm.defaultProps = {
   onPressRegister: null,
 };
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#3f51b5',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+  },
+});
 
 export default function RegisterForm(props) {
   const { onPressRegister } = props;
@@ -103,7 +112,10 @@ export default function RegisterForm(props) {
             onSubmit={(values) => {
               handleRegister(values);
               return new Promise((res) => {
-                setTimeout(res, 2000);
+                setTimeout(() => {
+                  res();
+                  window.location.href = '/';
+                }, 2000);
               });
             }}>
             {({

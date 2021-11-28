@@ -3,15 +3,12 @@ import RegisterForm from 'features/Auth/components/RegisterForm';
 import { auth } from '../../../../firebase';
 import userApi from 'api/userApi';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 export default function RegisterPage() {
   const uid = useSelector((state) => state.userAuth.id);
   const email = useSelector((state) => state.userAuth.email);
 
   const [formData, setFormData] = useState({});
-
-  const history = useHistory();
 
   const onPressRegister = async (values) => {
     try {
@@ -22,7 +19,7 @@ export default function RegisterPage() {
         });
 
       setFormData(values);
-      history.push('/');
+      window.location.href = '/';
     } catch (error) {
       console.log(error);
     }

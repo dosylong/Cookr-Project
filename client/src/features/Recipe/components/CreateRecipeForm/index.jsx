@@ -21,15 +21,18 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
+import ProgressBar from 'components/ProgressBar';
 import './CreateRecipeForm.css';
 
 RecipeForm.propTypes = {
   onSubmitRecipe: PropTypes.func,
+  uploadRecipeImage: PropTypes.func,
   categories: PropTypes.array,
 };
 
 RecipeForm.defaultProps = {
   onSubmitRecipe: null,
+  uploadRecipeImage: null,
   categories: [],
 };
 
@@ -54,7 +57,8 @@ const editorConfiguration = {
 };
 
 export default function RecipeForm(props) {
-  const { onSubmitRecipe, categories } = props;
+  const { onSubmitRecipe, categories, imgURL, progress, uploadRecipeImage } =
+    props;
 
   const initialValues = {
     ingredients: [
@@ -62,15 +66,13 @@ export default function RecipeForm(props) {
         description: '',
       },
     ],
-    title: '',
     description: '',
     name: '',
     content: '',
     prepTime: '',
     cookTime: '',
     servings: '',
-    coverImage: '',
-    // categories: [''],
+    categories: [],
   };
 
   const createRecipeSchema = yup.object().shape({
@@ -84,7 +86,6 @@ export default function RecipeForm(props) {
     prepTime: yup.string().required('Prepare Time is required!'),
     cookTime: yup.string().required('Cook Time is required!'),
     servings: yup.string().required('Servings is required!'),
-    // categories: yup.string().required('Category is required!'),
   });
 
   const handleCreateRecipe = (values) => {
@@ -124,9 +125,13 @@ export default function RecipeForm(props) {
                 <Container maxWidth='xs' sx={{ mt: 5 }}>
                   <FieldArray name='ingredients'>
                     {(arrayHelpers) => (
-                      <Stack>
+                      <>
                         {values.ingredients.map((ingredient, index) => (
-                          <Stack key={index} direction='row' sx={{ mb: 2 }}>
+                          <Stack
+                            key={index}
+                            spacing={2}
+                            direction='row'
+                            sx={{ mb: 2 }}>
                             <TextField
                               id='ingredients'
                               label='Ingredient'
@@ -136,35 +141,34 @@ export default function RecipeForm(props) {
                               required
                               fullWidth
                             />
-                            <Stack direction='row'>
-                              {values.ingredients.length > 1 && (
-                                <IconButton
-                                  disabled={isSubmitting}
-                                  size='small'
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  sx={{
-                                    color: 'green',
-                                  }}>
-                                  <RemoveIcon />
-                                </IconButton>
-                              )}
-
+                            {values.ingredients.length > 1 && (
                               <IconButton
                                 disabled={isSubmitting}
-                                onClick={() =>
-                                  arrayHelpers.push({
-                                    description: '',
-                                  })
-                                }
+                                size='large'
+                                onClick={() => arrayHelpers.remove(index)}
                                 sx={{
                                   color: 'green',
                                 }}>
-                                <AddIcon />
+                                <RemoveIcon />
                               </IconButton>
-                            </Stack>
+                            )}
+
+                            <IconButton
+                              disabled={isSubmitting}
+                              onClick={() =>
+                                arrayHelpers.push({
+                                  description: '',
+                                })
+                              }
+                              size='large'
+                              sx={{
+                                color: 'green',
+                              }}>
+                              <AddIcon />
+                            </IconButton>
                           </Stack>
                         ))}
-                      </Stack>
+                      </>
                     )}
                   </FieldArray>
                   <Grid item>
@@ -252,7 +256,7 @@ export default function RecipeForm(props) {
                     />
                   </Grid>
 
-                  {/* <Grid item xs={12} sx={{ mt: 2 }}>
+                  <Grid item xs={12} sx={{ mt: 2 }}>
                     <FormControl
                       sx={{ minWidth: 150 }}
                       error={
@@ -263,7 +267,10 @@ export default function RecipeForm(props) {
                       </InputLabel>
                       <Select
                         id='categories'
-                        value={categories}
+                        name='categories'
+                        multiple
+                        displayEmpty
+                        value={values.categories}
                         label='Category'
                         onChange={handleChange}>
                         {categories.map((category) => (
@@ -274,27 +281,38 @@ export default function RecipeForm(props) {
                       </Select>
                       <FormHelperText>{errors.categories}</FormHelperText>
                     </FormControl>
-                  </Grid> */}
+                  </Grid>
+
                   <label htmlFor='contained-button-file'>
                     <Input
                       accept='image/*'
                       id='contained-button-file'
                       type='file'
                       multiple
-                      onChange={(e) => e.target.files[0]}
+                      onChange={(e) => uploadRecipeImage(e.target.files[0])}
                     />
                     <Button
                       disabled={isSubmitting}
                       variant='contained'
                       component='span'
-                      sx={{ mt: 3 }}>
+                      sx={{ mt: 3, mb: 2 }}>
                       Upload Recipe Image
                     </Button>
-                    {/* {imgURL ? (
+                    <Box
+                      sx={{
+                        bgcolor: 'background.paper',
+                        boxShadow: 1,
+                        borderRadius: 1,
+                        p: 2,
+                        width: 500,
+                        height: 500,
+                      }}>
+                      {imgURL ? (
                         <Box sx={{ width: '100%' }}>
                           <ProgressBar value={progress} progress={progress} />
                         </Box>
-                      ) : null} */}
+                      ) : null}
+                    </Box>
                   </label>
                 </Container>
                 <Grid item xs={12}>
