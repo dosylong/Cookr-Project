@@ -9,7 +9,7 @@ class RecipeController {
   createRecipe = async (req, res, next) => {
     try {
       console.log(req.body);
-      const createRecipe = await prisma.post.create({
+      const createRecipe = await prisma.recipe.create({
         data: {
           authorId: req.body.authorId,
           name: req.body.name,
@@ -24,7 +24,7 @@ class RecipeController {
 
           ingredients: {
             create: {
-              description: req.body.description,
+              description: Array(req.body.description),
             },
           },
         },
