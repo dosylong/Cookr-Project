@@ -72,21 +72,22 @@ export default function CreateRecipePage() {
     }
   }, []);
 
-  const onSubmitRecipe = (values) => {
+  const onSubmitRecipe = async (values) => {
     try {
-      const submitRecipe = async () => {
-        const response = await recipeApi.createRecipe({
-          ...values,
-          authorId: userId,
-        });
-        console.log(response);
-      };
-      submitRecipe();
-      history.push('/');
+      console.log({ ...values, authorId: userId });
+
+      const response = await recipeApi.createRecipe({
+        ...values,
+        authorId: userId,
+      });
+      console.log(response);
+
+      // history.push('/');
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div>
       <CreateRecipeForm
