@@ -21,21 +21,29 @@ model Recipe {
   id           Int         @id @default(autoincrement())
   user         User?       @relation(fields: [authorId], references: [userFirebaseId])
   ingredients  Ingredient? @relation(fields: [ingredientId], references: [id])
-  title        String
+  categories   Category?   @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  authorId     String
+  ingredientId Int
   name         String
   content      String
   description  String
   coverImage   String[]
-  authorId     String
-  ingredientId Int
   prepTime     String
   cookTime     String
   servings     String
+  recipeSlug   String      @unique
   createdAt    DateTime    @default(now())
   updateAt     DateTime    @updatedAt
 }
 
 model Ingredient {
+  id          Int      @id @default(autoincrement())
+  description String
+  recipes     Recipe[]
+}
+
+model Category {
   id          Int      @id @default(autoincrement())
   description String
   recipes     Recipe[]
