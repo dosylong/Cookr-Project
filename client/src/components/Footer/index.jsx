@@ -27,9 +27,7 @@ export default function Footer() {
         variant='subtitle1'
         align='center'
         color='text.secondary'
-        component='p'>
-        Some text about footer
-      </Typography>
+        component='p'></Typography>
       <Copyright />
     </Box>
   );

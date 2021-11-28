@@ -20,6 +20,7 @@ import { Container } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 
 const theme = createTheme();
@@ -88,8 +89,20 @@ export default function LoginForm(props) {
           <Formik
             initialValues={initialValues}
             validationSchema={loginSchema}
-            onSubmit={(values) => handleLogin(values)}>
-            {({ handleChange, handleSubmit, values, errors, touched }) => (
+            onSubmit={(values) => {
+              handleLogin(values);
+              return new Promise((res) => {
+                setTimeout(res, 2000);
+              });
+            }}>
+            {({
+              handleChange,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              isSubmitting,
+            }) => (
               <Form className='form'>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
@@ -142,12 +155,16 @@ export default function LoginForm(props) {
                   </Grid>
                 </Grid>
                 <Button
+                  disabled={isSubmitting}
                   type='submit'
                   onClick={handleSubmit}
                   fullWidth
                   variant='contained'
-                  sx={{ mt: 3, mb: 2 }}>
-                  Sign In
+                  sx={{ mt: 3, mb: 2 }}
+                  startIcon={
+                    isSubmitting ? <CircularProgress size={24} /> : null
+                  }>
+                  {isSubmitting ? 'Signing in...' : 'Sign in'}
                 </Button>
                 <Grid container>
                   <Grid item>

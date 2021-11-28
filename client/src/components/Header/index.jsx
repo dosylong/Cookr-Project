@@ -167,7 +167,7 @@ export default function Header() {
                 </Search>
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                   <IconButton
-                    size='large'
+                    size='medium'
                     edge='end'
                     aria-label='account of current user'
                     aria-controls={menuId}
@@ -196,6 +196,7 @@ export default function Header() {
           </Toolbar>
         </Container>
       </AppBar>
+      <Toolbar />
       {renderMenu}
     </Box>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Avatar } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import './EditProfile.css';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { styled } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 import ProgressBar from 'components/ProgressBar';
 
 EditProfileForm.propTypes = {
@@ -44,8 +45,10 @@ export default function EditProfileForm(props) {
     uploadAvatar,
     profile,
     imgURL,
+    // photoURL,
     progress,
   } = props;
+
   const history = useHistory();
 
   const onClickBack = () => {
@@ -100,16 +103,38 @@ export default function EditProfileForm(props) {
             <Formik
               initialValues={initialValues}
               validationSchema={editProfileSchema}
-              onSubmit={(values) => handleEdit(values)}>
-              {({ handleChange, handleSubmit, values, errors, touched }) => (
+              onSubmit={(values) => {
+                handleEdit(values);
+                return new Promise((res) => {
+                  setTimeout(res, 1800);
+                });
+              }}>
+              {({
+                handleChange,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                isSubmitting,
+              }) => (
                 <Form className='form'>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <img
+                      <Avatar
                         src={imgURL}
-                        alt={values.fullName}
-                        className='image'
+                        sx={{
+                          margin: 0,
+                          padding: 0,
+                          objectFit: 'cover',
+                          justifyContent: 'center',
+                          display: 'flex',
+                          alignItems: 'center',
+                          width: 180,
+                          height: 180,
+                          ml: 13,
+                        }}
                       />
+
                       <label htmlFor='contained-button-file'>
                         <Input
                           accept='image/*'
@@ -118,6 +143,7 @@ export default function EditProfileForm(props) {
                           onChange={(e) => uploadAvatar(e.target.files[0])}
                         />
                         <Button
+                          disabled={isSubmitting}
                           variant='contained'
                           component='span'
                           className='uploadAvatarButton'
@@ -125,7 +151,7 @@ export default function EditProfileForm(props) {
                             mt: 2,
                             backgroundColor: '#2a9d8f',
                           }}>
-                          Upload Avatar
+                          Upload New Avatar
                         </Button>
                         {imgURL ? (
                           <Box sx={{ width: '100%' }}>
@@ -199,10 +225,14 @@ export default function EditProfileForm(props) {
                   <Button
                     type='submit'
                     onClick={handleSubmit}
+                    disabled={isSubmitting}
                     fullWidth
                     variant='contained'
-                    sx={{ mt: 3, mb: 2 }}>
-                    Edit Profile
+                    sx={{ mt: 3, mb: 2 }}
+                    startIcon={
+                      isSubmitting ? <CircularProgress size={24} /> : null
+                    }>
+                    {isSubmitting ? 'Saving...' : 'Edit Profile'}
                   </Button>
 
                   <Grid container justifyContent='flex-start'>

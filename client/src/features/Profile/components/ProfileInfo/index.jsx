@@ -52,6 +52,7 @@ function ProfileInfo(props) {
         <div className='profileFullName'>{profile.fullName}</div>
 
         <div className='profileBio'>{profile.bio}</div>
+        <div className='profileBio'>Username: {profile.username}</div>
 
         {isOwner && (
           <>

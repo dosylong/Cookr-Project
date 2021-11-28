@@ -17,6 +17,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Banner from 'components/Banner';
+import { Divider } from '@mui/material';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -43,7 +44,7 @@ export default function HomeContent() {
       <Typography variant='h3'>Latest recipe</Typography>
       <div className='card'>
         <Stack direction='row' spacing={5}>
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 300, borderRadius: 3 }} className='cardEffect'>
             <CardActionArea>
               <Link to='/asd' className='cardLink'>
                 <CardHeader
@@ -64,6 +65,7 @@ export default function HomeContent() {
                     peas along with the mussels, if you like.
                   </Typography>
                 </CardContent>
+                <Divider variant='middle' />
                 <CardActions disableSpacing>
                   <Box
                     sx={{

@@ -18,6 +18,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import CircularProgress from '@mui/material/CircularProgress';
 // import { useSelector } from 'react-redux';
 
 RegisterForm.propTypes = {
@@ -99,8 +100,20 @@ export default function RegisterForm(props) {
           <Formik
             initialValues={initialValues}
             validationSchema={registerSchema}
-            onSubmit={(values) => handleRegister(values)}>
-            {({ handleChange, handleSubmit, values, errors, touched }) => (
+            onSubmit={(values) => {
+              handleRegister(values);
+              return new Promise((res) => {
+                setTimeout(res, 2000);
+              });
+            }}>
+            {({
+              handleChange,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              isSubmitting,
+            }) => (
               <Form className='form'>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
@@ -228,12 +241,16 @@ export default function RegisterForm(props) {
                   </Grid>
                 </Grid>
                 <Button
+                  disabled={isSubmitting}
                   type='submit'
                   onClick={handleSubmit}
                   fullWidth
                   variant='contained'
-                  sx={{ mt: 3, mb: 2 }}>
-                  Sign Up
+                  sx={{ mt: 3, mb: 2 }}
+                  startIcon={
+                    isSubmitting ? <CircularProgress size={24} /> : null
+                  }>
+                  {isSubmitting ? 'Signing up...' : 'Sign up'}
                 </Button>
                 <Grid container justifyContent='flex-end'>
                   <Grid item>

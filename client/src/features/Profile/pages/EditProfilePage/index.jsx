@@ -7,6 +7,7 @@ import { storage, auth } from '../../../../firebase';
 export default function EditProfilePage() {
   const userId = useSelector((state) => state.userAuth.id);
   const email = useSelector((state) => state.userAuth.email);
+  // const photoURL = useSelector((state) => state.userAuth.photoURL);
 
   const [imgURL, setImgURL] = useState('');
   const [progress, setProgress] = useState(0);
@@ -120,6 +121,7 @@ export default function EditProfilePage() {
         onClickEditProfile={onClickEditProfile}
         userId={userId}
         imgURL={imgURL}
+        // photoURL={photoURL}
         progress={progress}
         uploadAvatar={uploadAvatar}
         profile={profile}

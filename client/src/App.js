@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  // Redirect,
+  //Redirect,
 } from 'react-router-dom';
 import Login from './features/Auth';
 import Register from './features/Auth';
@@ -25,6 +25,8 @@ function App() {
   const dispatch = useDispatch();
 
   const uid = useSelector((state) => state.userAuth.id);
+  // const isLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
+
   // const [isExistProfile, setIsExistProfile] = useState(true);
 
   // useEffect(() => {
