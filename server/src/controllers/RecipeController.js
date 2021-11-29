@@ -34,12 +34,18 @@ class RecipeController {
           content: req.body.content,
           description: req.body.description,
           cookTime: req.body.cookTime,
-          categoryId: req.body.categoryId,
+          //categoryId: req.body.categoryId,
           name: req.body.name,
           prepTime: req.body.prepTime,
           servings: req.body.servings,
           recipeSlug: `${slugify(req.body.name)}-${nanoid()}`,
-          coverImage: String(req.body.coverImage),
+          //coverImage: String(req.body.coverImage),
+
+          categories: {
+            connect: {
+              id: req.body.categoryId,
+            },
+          },
         },
       });
       res.status(200).json(response);
