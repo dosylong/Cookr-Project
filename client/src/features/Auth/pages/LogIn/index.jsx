@@ -2,9 +2,9 @@ import React from 'react';
 import firebase from '../../../../firebase';
 import { auth } from '../../../../firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import './LoginPage.css';
 import LoginForm from 'features/Auth/components/LoginForm';
 import { useHistory } from 'react-router';
+import { Divider, Typography, Container } from '@mui/material';
 
 const uiConfig = {
   signInFlow: 'redirect',
@@ -23,7 +23,7 @@ export default function LoginPage() {
           console.log(user);
         });
 
-      history.push('/');
+      window.location.pathname = '/';
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -40,11 +40,12 @@ export default function LoginPage() {
   return (
     <>
       <LoginForm onPressLogin={onPressLogin} />
-      <StyledFirebaseAuth
-        uiConfig={uiConfig}
-        firebaseAuth={auth}
-        className='login_google_button'
-      />
+      <Container maxWidth='xs'>
+        <Divider variant='middle'>
+          <Typography variant='overline'>or</Typography>
+        </Divider>
+      </Container>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
     </>
   );
 }

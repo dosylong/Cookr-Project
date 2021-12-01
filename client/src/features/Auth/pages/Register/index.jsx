@@ -19,7 +19,7 @@ export default function RegisterPage() {
         });
 
       setFormData(values);
-      window.location.href = '/';
+      window.location.pathname = '/';
     } catch (error) {
       console.log(error);
     }

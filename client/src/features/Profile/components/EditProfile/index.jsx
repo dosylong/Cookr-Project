@@ -14,6 +14,7 @@ import * as yup from 'yup';
 import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import ProgressBar from 'components/ProgressBar';
+import { useSelector } from 'react-redux';
 
 EditProfileForm.propTypes = {
   onClickEditProfile: PropTypes.func,
@@ -51,6 +52,8 @@ export default function EditProfileForm(props) {
 
   const history = useHistory();
 
+  const userId = useSelector((state) => state.userAuth.id);
+
   const onClickBack = () => {
     history.goBack();
   };
@@ -58,6 +61,7 @@ export default function EditProfileForm(props) {
   const handleEdit = (values) => {
     onClickEditProfile(values);
     updateDisplayName(values);
+    window.location.pathname = `/profile/${userId}`;
   };
 
   const initialValues = {
@@ -103,11 +107,11 @@ export default function EditProfileForm(props) {
             <Formik
               initialValues={initialValues}
               validationSchema={editProfileSchema}
-              onSubmit={(values) => {
-                handleEdit(values);
-                return new Promise((res) => {
+              onSubmit={async (values) => {
+                await new Promise((res) => {
                   setTimeout(res, 1800);
                 });
+                handleEdit(values);
               }}>
               {({
                 handleChange,

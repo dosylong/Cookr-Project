@@ -77,6 +77,7 @@ export default function Header() {
       const getUser = async () => {
         const response = await userApi.getUserProfile({
           userFirebaseId: userId,
+          fullName: fullName,
         });
         setProfile(response);
       };
@@ -84,7 +85,7 @@ export default function Header() {
     } catch (error) {
       console.log(error);
     }
-  }, [userId]);
+  }, [userId, fullName]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -98,6 +99,10 @@ export default function Header() {
       window.location = '/';
       setAnchorEl(null);
     });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
   const isMenuOpen = Boolean(anchorEl);
@@ -131,8 +136,8 @@ export default function Header() {
         </Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <Link to={`/recipe/create`} className='linkProfile'>
-          <Typography>Create new Recipe 😋</Typography>
+        <Link to={`/dish/create`} className='linkProfile'>
+          <Typography>Create new Dish Recipe 😋</Typography>
         </Link>
       </MenuItem>
       <MenuItem onClick={onPressLogOut}>
@@ -146,7 +151,7 @@ export default function Header() {
       <AppBar position='fixed' className='header_style'>
         <Container maxWidth='lg'>
           <Toolbar>
-            <Link to='/' className='linkHeader'>
+            <Link onClick={scrollToTop} to='/' className='linkHeader'>
               <Typography variant='h6' sx={{ fontSize: 25 }}>
                 CooKit 🍱
               </Typography>

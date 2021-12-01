@@ -6,7 +6,7 @@ import './Footer.css';
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='text.secondary' align='center'>
+    <Typography variant='subtitle1' color='text.secondary' align='center'>
       {'Copyright © '}
       <Link color='inherit' href='/'>
         Cookit
@@ -23,11 +23,9 @@ export default function Footer() {
       <Typography variant='h6' align='center' gutterBottom>
         CooKit
       </Typography>
-      <Typography
-        variant='subtitle1'
-        align='center'
-        color='text.secondary'
-        component='p'></Typography>
+      <Typography variant='subtitle1' align='center' color='text.secondary'>
+        A simple recipe app
+      </Typography>
       <Copyright />
     </Box>
   );

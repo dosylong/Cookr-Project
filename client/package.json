@@ -17,6 +17,7 @@
     "firebase": "^8.9.0",
     "firebaseui": "^5.0.0",
     "formik": "^2.2.9",
+    "moment": "^2.29.1",
     "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-custom-scrollbars": "^4.2.1",
