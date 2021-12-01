@@ -1,14 +1,12 @@
 const userRouter = require('./user');
-const recipeRouter = require('./recipe');
-const categoryRouter = require('./category');
+const dishRouter = require('./dish');
 
 const route = (app) => {
   //route /user
   app.use('/user', userRouter);
-  //route /recipe
-  app.use('/recipe', recipeRouter);
-  //route /category
-  app.use('/category', categoryRouter);
+
+  //route /dish
+  app.use('/dish', dishRouter);
 };
 
 module.exports = route;

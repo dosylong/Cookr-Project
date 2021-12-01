@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Recipe" ADD COLUMN     "cookTime" DOUBLE PRECISION,
+ADD COLUMN     "prepTime" DOUBLE PRECISION;

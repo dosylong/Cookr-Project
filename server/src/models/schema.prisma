@@ -8,46 +8,42 @@ generator client {
 }
 
 model User {
-  userFirebaseId String   @id
-  username       String   @unique
-  email          String   @unique
+  userFirebaseId String @id
+  username       String @unique
+  email          String @unique
   bio            String
   fullName       String
   photoURL       String
-  recipes        Recipe[]
+  dishes         Dish[]
+}
 
+model Dish {
+  id          Int          @id @default(autoincrement())
+  authorId    String?
+  name        String?
+  description String?
+  dishSlug    String?      @unique
+  user        User?        @relation(fields: [authorId], references: [userFirebaseId])
+  recipes     Recipe[]
+  ingredients Ingredient[]
+  createdAt   DateTime?    @default(now())
+  updatedAt   DateTime?    @default(now())
 }
 
 model Recipe {
-  id          Int          @id @default(autoincrement())
-  categoryId  Int
-  authorId    String?
-  name        String?
-  content     String?
-  description String?
-  coverImage  String[]
-  prepTime    String?
-  cookTime    String?
-  servings    String?
-  recipeSlug  String?      @unique
-  createdAt   DateTime     @default(now())
-  updateAt    DateTime     @updatedAt
-  categories  Category?    @relation(fields: [categoryId], references: [id])
-  user        User?        @relation(fields: [authorId], references: [userFirebaseId])
-  ingredients Ingredient[]
+  id         Int     @id @default(autoincrement())
+  difficulty String?
+  prepTime   Float?
+  cookTime   Float?
+  dishId     Int?
+  dish       Dish?   @relation(fields: [dishId], references: [id])
 }
 
 model Ingredient {
-  id          Int     @id @default(autoincrement())
-  recipeId    Int
-  description String
-  recipes     Recipe? @relation(fields: [recipeId], references: [id])
-}
-
-model Category {
-  id          Int      @id @default(autoincrement())
-  description String
-  recipes     Recipe[]
+  id     Int     @id @default(autoincrement())
+  name   String?
+  dishId Int?
+  dish   Dish?   @relation(fields: [dishId], references: [id])
 }
 
 enum Role {

@@ -74,9 +74,9 @@ class UserController {
           userFirebaseId: req.query.userFirebaseId,
         },
       });
-      // if (!getUserProfileInDb) {
-      //   return res.status(200).json({ message: 'User not found' });
-      // }
+      if (!getUserProfileInDb) {
+        return res.status(200).json({ message: 'User not found' });
+      }
       res.status(200).json({ ...getUserProfileInDb, message: 'User founded' });
     } catch (error) {
       return next(error);
