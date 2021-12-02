@@ -6,6 +6,7 @@ import DishCard from 'features/Dish/components/DishCard';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './HomeContent.css';
+import { useSelector } from 'react-redux';
 
 HomeContent.propTypes = {
   allDishes: PropTypes.array,
@@ -17,12 +18,13 @@ HomeContent.defaultProps = {
 
 export default function HomeContent(props) {
   const { allDishes } = props;
+  const isLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
   return (
     <>
       <Banner />
       <Container maxWidth='lg'>
         <Typography variant='h3' align='center'>
-          Latest dish recipe
+          Latest recipe
         </Typography>
         <Grid
           container
@@ -35,11 +37,16 @@ export default function HomeContent(props) {
           ))}
         </Grid>
       </Container>
-      <Zoom in={true} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
-        <Fab color='secondary' className='fab' sx={{ position: 'fixed', p: 5 }}>
-          <MoreHoriz fontSize='large' />
-        </Fab>
-      </Zoom>
+      {isLoggedIn === true && (
+        <Zoom in={true} timeout={{ enter: 500, exit: 500 }} unmountOnExit>
+          <Fab
+            color='secondary'
+            className='fab'
+            sx={{ position: 'fixed', p: 4.5 }}>
+            <MoreHoriz fontSize='large' />
+          </Fab>
+        </Zoom>
+      )}
     </>
   );
 }

@@ -71,13 +71,13 @@ export default function Header() {
   const photoURL = useSelector((state) => state.userAuth.photoURL);
   const userId = useSelector((state) => state.userAuth.id);
   const fullName = useSelector((state) => state.userAuth.fullName);
+  // const isLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
 
   useEffect(() => {
     try {
       const getUser = async () => {
         const response = await userApi.getUserProfile({
           userFirebaseId: userId,
-          fullName: fullName,
         });
         setProfile(response);
       };
@@ -85,7 +85,7 @@ export default function Header() {
     } catch (error) {
       console.log(error);
     }
-  }, [userId, fullName]);
+  }, [userId]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -128,7 +128,7 @@ export default function Header() {
           <Stack direction='row' spacing={2}>
             <Avatar sx={{ mt: 0.7 }} src={photoURL} alt={fullName} />
             <Stack direction='column'>
-              <Typography variant='h6'>{profile.fullName}</Typography>
+              <Typography variant='h6'>{fullName}</Typography>
               <Typography variant='body1'>View Profile</Typography>
             </Stack>
           </Stack>
@@ -137,7 +137,7 @@ export default function Header() {
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Link to={`/dish/create`} className='linkProfile'>
-          <Typography>Create new Dish Recipe 😋</Typography>
+          <Typography>Create new Recipe 😋</Typography>
         </Link>
       </MenuItem>
       <MenuItem onClick={onPressLogOut}>

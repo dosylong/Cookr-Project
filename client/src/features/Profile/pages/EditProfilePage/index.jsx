@@ -94,6 +94,11 @@ export default function EditProfilePage() {
         photoURL: url,
       })
       .then(() => {
+        setTimeout(() => {
+          setProgress(0);
+          window.location.pathname = `/profile/${userId}`;
+        }, 1800);
+
         console.log('Updated avatar successfully!');
       })
       .catch((error) => {

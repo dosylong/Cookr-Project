@@ -25,7 +25,6 @@ function App() {
   const dispatch = useDispatch();
 
   const uid = useSelector((state) => state.userAuth.id);
-  // const isLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
 
   const [isExistProfile, setIsExistProfile] = useState(true);
 

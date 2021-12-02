@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import dishApi from 'api/dishApi';
 import DishDetail from 'features/Dish/components/DishDetail';
-import { useSelector } from 'react-redux';
 
 export default function DishDetailPage() {
   const { dishSlug } = useParams();

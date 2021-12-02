@@ -4,7 +4,7 @@ import Typewriter from 'typewriter-effect';
 import './Banner.css';
 
 export default function Banner() {
-  const sentences = ['breakfast', 'lunch', 'dinner'];
+  const sentences = ['Breakfast', 'Lunch', 'Dinner'];
 
   return (
     <div className='banner'>

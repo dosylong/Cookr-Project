@@ -18,6 +18,17 @@ export default function RegisterPage() {
           console.log(user);
         });
 
+      await auth.currentUser
+        .updateProfile({
+          displayName: values.fullName,
+        })
+        .then(() => {
+          console.log('Created fullName successfully!');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       setFormData(values);
       window.location.pathname = '/';
     } catch (error) {

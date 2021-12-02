@@ -1,7 +1,14 @@
 import React from 'react';
 import './DishDetail.css';
 import { useSelector } from 'react-redux';
-import { IconButton, Avatar, Stack, Typography } from '@mui/material';
+import {
+  IconButton,
+  Avatar,
+  Stack,
+  Typography,
+  Tooltip,
+  Zoom,
+} from '@mui/material';
 import {
   AccessTime,
   WatchLaterRounded,
@@ -9,9 +16,15 @@ import {
   MoreHoriz,
   LocalDining,
 } from '@mui/icons-material';
+import { useHistory } from 'react-router-dom';
 
 export default function DishDetail(props) {
   const { dishDetail } = props;
+  const history = useHistory();
+
+  const onClickAuthorProfile = () => {
+    history.push(`/profile/${dishDetail.authorId}`);
+  };
 
   const uid = useSelector((state) => state.userAuth.id);
   const isOwner = dishDetail.authorId === uid;
@@ -27,10 +40,22 @@ export default function DishDetail(props) {
             <h2>{dishDetail.name}</h2>
             <p>{dishDetail.description}</p>
             <Stack direction='row' spacing={1} sx={{ pl: 53 }}>
-              <Typography sx={{ pt: 1, fontWeight: 'bold' }}>
+              <Typography
+                onClick={onClickAuthorProfile}
+                sx={{ pt: 1, fontWeight: 'bold', cursor: 'pointer' }}>
                 {dishDetail.user?.fullName}
               </Typography>
-              <Avatar src={dishDetail.user?.photoURL} alt='avatar' />
+
+              <Tooltip
+                title={dishDetail.user?.fullName}
+                TransitionComponent={Zoom}>
+                <Avatar
+                  sx={{ cursor: 'pointer' }}
+                  onClick={onClickAuthorProfile}
+                  src={dishDetail.user?.photoURL}
+                  alt='avatar'
+                />
+              </Tooltip>
             </Stack>
             {isOwner && (
               <div>
